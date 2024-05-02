@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from "@/assets/images/logo.png"
 import { Button, Input, ConfigProvider, Form, FormProps, notification } from "antd"
 import Link from 'next/link';
@@ -12,6 +12,15 @@ import { useRouter } from 'next/navigation';
 export default function Login() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 600);
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
 
     const handleSubmit: FormProps<TLogin>["onFinish"] = async (values) => {
         setLoading(true);
@@ -55,7 +64,7 @@ export default function Login() {
                     requiredMark={false}
                     onFinish={handleSubmit}
                     initialValues={{ email: "", password: "" }}
-                    style={{ width: 400, display: "flex", flexDirection: "column", gap: "12px", font: "14px" }}
+                    style={{ width: isMobile ? 300 : 400, display: "flex", flexDirection: "column", gap: "12px", font: "14px" }}
                 >
                     <Form.Item
                         name="email"

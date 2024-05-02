@@ -68,7 +68,7 @@ export default function Projects() {
                 </Flex>
                 {isLoading ?
                     <Loading /> :
-                    <div className="grid grid-cols-4 gap-4" >
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4" >
                         {projects.map((project: Project) => (
                             <ProjectCard key={project._id} project={project} />
                         ))}

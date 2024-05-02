@@ -31,13 +31,13 @@ const Header = () => {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/50 dark:border-border/90 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className='container flex h-14 max-w-screen-2xl justify-between items-center'>
+            <div className='container flex h-14 w-full md:max-w-screen-2xl justify-between items-center p-2 md:p-8'>
                 <nav className="relative z-10 flex items-center">
-                    <Link href="/" className="mr-16">
+                    <Link href="/" className="mr-4 md:mr-16">
                         <span className="sr-only">WorkSpace</span>
                         <Image src={logo} alt="WorkSpace-Logo" loading="lazy" width={70} />
                     </Link>
-                    <ul className="space-x-2 font-medium text-sm mr-8 hidden md:flex">
+                    <ul className="space-x-0 md:space-x-2 font-medium text-sm mr-2 md:mr-8 flex">
                         {navItems.map((item) => item.href && (
                             <Link
                                 key={item.title}
@@ -55,7 +55,7 @@ const Header = () => {
                     </ul>
                 </nav>
 
-                <div className="flex items-center justify-center space-x-5">
+                <div className="flex items-center justify-center space-x-1 md:space-x-5">
                     <Button onClick={() => {
                         user.email ? localStorage.clear() : router.push("/login")
                     }} type="primary">{user?.email ? "Logout" : "Login"}</Button>
