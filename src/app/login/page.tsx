@@ -9,7 +9,7 @@ import { TLogin } from '@/types/Login';
 import { LOGIN_EMAIL, LOGIN_PASSWORD } from '@/constants/loginCred';
 import { useRouter } from 'next/navigation';
 
-const Login = () => {
+export default function Login() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 
@@ -28,6 +28,8 @@ const Login = () => {
             message: "Logged In Successfully",
             description: "You are being redirected to home page",
         });
+
+        localStorage.setItem("email", values.email)
 
         router.push("/projects");
         setLoading(false);
@@ -64,7 +66,7 @@ const Login = () => {
 
                     <Form.Item
                         name="password"
-                        rules={[{ required: true, message: "Please enter your password for login" }]}
+                        rules={[{ required: true, message: "Please enter your password for login" }, { min: 4 }]}
                     >
                         <Input.Password size="large" placeholder="Password" />
                     </Form.Item>
@@ -77,5 +79,3 @@ const Login = () => {
         </main>
     );
 };
-
-export default Login;

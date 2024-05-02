@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React from 'react';
+import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from "@/utils/common";
 import logo from "@/assets/images/logo.png"
@@ -24,6 +24,10 @@ const navItems = [
 const Header = () => {
     const pathname = usePathname();
     const router = useRouter()
+    const [user, _setUser] = useState(() => {
+        const email = localStorage.getItem("email");
+        return { email }
+    })
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/50 dark:border-border/90 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -39,7 +43,7 @@ const Header = () => {
                                 key={item.title}
                                 href={item.href}
                                 className={cn(
-                                    "h-8 items-center justify-center rounded-md text-sm font-medium transition-colors px-3 py-2 inline-flex text-secondary-foreground hover:bg-secondary",
+                                    "h-8 items-center justify-center rounded-md text-sm font-medium transition-colors px-3 py-2 inline-flex 'text-secondary-foreground' hover:bg-secondary",
                                     pathname === item.href
                                         ? "bg-secondary"
                                         : ""
@@ -52,7 +56,9 @@ const Header = () => {
                 </nav>
 
                 <div className="flex items-center justify-center space-x-5">
-                    <Button onClick={() => router.push("/login")} type="primary">Login</Button>
+                    <Button onClick={() => {
+                        user.email ? localStorage.clear() : router.push("/login")
+                    }} type="primary">{user?.email ? "Logout" : "Login"}</Button>
                     <ModeToggle />
                 </div>
             </div >

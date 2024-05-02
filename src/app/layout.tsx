@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../styles/globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import ReactQueryProvider from "@/providers/react-query-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AntdRegistry>{children}</AntdRegistry>
+          <ReactQueryProvider>
+            <AntdRegistry>{children}</AntdRegistry>
+          </ReactQueryProvider>
         </ThemeProvider>
       </body>
     </html>
