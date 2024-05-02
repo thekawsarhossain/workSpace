@@ -25,7 +25,7 @@ const Header = () => {
     const pathname = usePathname();
     const router = useRouter()
     const [user, _setUser] = useState(() => {
-        const email = localStorage.getItem("email");
+        const email = typeof window !== 'undefined' ? localStorage.getItem("email") : "";
         return { email }
     })
 
@@ -57,7 +57,7 @@ const Header = () => {
 
                 <div className="flex items-center justify-center space-x-1 md:space-x-5">
                     <Button onClick={() => {
-                        user.email ? localStorage.clear() : router.push("/login")
+                        user.email && typeof window !== 'undefined' ? localStorage.clear() : router.push("/login")
                     }} type="primary">{user?.email ? "Logout" : "Login"}</Button>
                     <ModeToggle />
                 </div>

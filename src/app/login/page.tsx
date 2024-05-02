@@ -12,14 +12,20 @@ import { useRouter } from 'next/navigation';
 export default function Login() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth <= 600 : "");
 
     useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 600);
-        window.addEventListener('resize', handleResize);
+        if (typeof window !== 'undefined') {
+            setIsMobile(window.innerWidth <= 600);
 
-        return () => window.removeEventListener('resize', handleResize);
+            const handleResize = () => setIsMobile(window.innerWidth <= 600);
+
+            window.addEventListener('resize', handleResize);
+
+            return () => window.removeEventListener('resize', handleResize);
+        }
     }, []);
+
 
 
     const handleSubmit: FormProps<TLogin>["onFinish"] = async (values) => {
@@ -38,7 +44,7 @@ export default function Login() {
             description: "You are being redirected to home page",
         });
 
-        localStorage.setItem("email", values.email)
+        if (typeof window !== 'undefined') localStorage.setItem("email", values.email)
 
         router.push("/projects");
         setLoading(false);
